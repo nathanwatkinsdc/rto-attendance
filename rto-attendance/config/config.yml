@@ -1,0 +1,49 @@
+# config/config.yml
+default:
+  database:
+    driver: "SQLite"
+    database: "data/attendance.db"
+    
+  app:
+    title: "RTO Attendance Tracking"
+    debug: false
+    port: 3838
+    max_file_size: "5MB"
+    session_timeout: 3600  # 1 hour
+    
+  logging:
+    level: "INFO"
+    file: "logs/app.log"
+    max_size: "10MB"
+    max_files: 5
+
+development:
+  database:
+    driver: "SQLite"
+    database: "data/attendance_dev.db"
+    
+  app:
+    debug: true
+    auto_reload: true
+    
+  logging:
+    level: "DEBUG"
+
+production:
+  database:
+    driver: "PostgreSQL"
+    host: !ENV ${DB_HOST}
+    port: !ENV ${DB_PORT}
+    database: !ENV ${DB_NAME}
+    username: !ENV ${DB_USER}
+    password: !ENV ${DB_PASSWORD}
+    pool_size: 10
+    ssl_mode: "require"
+    
+  app:
+    debug: false
+    auto_reload: false
+    
+  logging:
+    level: "INFO"
+    file: "/var/log/shiny-server/attendance.log"
